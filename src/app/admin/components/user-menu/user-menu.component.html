@@ -1,0 +1,21 @@
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="userMenu"
+  #userMenuTrigger="matMenuTrigger"
+>
+  <mat-icon>account_circle</mat-icon>
+</button>
+
+<mat-menu
+  #userMenu="matMenu"
+  [overlapTrigger]="false"
+  class="toolbar-dropdown-menu admin-user-menu"
+>
+  <span (mouseleave)="userMenuTrigger.closeMenu()">
+    <div class="divider"></div>
+    <a mat-menu-item routerLink="/login">
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Log out</span>
+    </a>
+  </span>
+</mat-menu>

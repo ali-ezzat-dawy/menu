@@ -1,0 +1,46 @@
+<mat-card
+  class="menu-item p-0"
+  [fxLayout]="viewType == 'grid' ? 'column' : 'row'"
+  [ngClass]="[viewType + '-item', 'column-' + column]"
+
+>
+  <div 
+    fxFlex="100"
+    [fxShrink]="viewType == 'grid' ? '3' : '2'"
+    class="thumbnail-section"
+  >
+    <div *ngIf="lazyLoad">
+      <img
+        [attr.data-src]=" menuItem.image || menuItem.image_url"
+        class="w-100 d-block swiper-lazy ArtistPic"
+      />
+      <div class="swiper-lazy-preloader"></div>
+    </div>
+    <img 
+      *ngIf="!lazyLoad"
+      [src]=" menuItem.image.medium || menuItem.image_url.medium "
+      class="w-100 d-block ArtistPic"
+    />
+  </div>
+  <div fxFlex="100" class="p-3">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
+      <mat-card-content class="mb-0 p-0">
+        <h1 class="title" >
+          <a>{{ menuItem.name || menuItem.title }}</a>
+        </h1>
+        <div class="mt-2">
+          <p>{{ menuItem.description || menuItem.ingredients }}</p>
+          <div *ngIf="viewType == 'list'" fxShow="false" fxShow.gt-sm="true">
+
+          </div>
+        </div>
+      </mat-card-content>
+      <div class="sticky-footer-helper" fxFlex="grow"></div>
+      <div class="m-0 p-0">
+        <div fxLayout="row" fxLayoutAlign="center center" class="divider mt-1">
+          <h2 class="primary-color">{{ menuItem.price}} LE</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

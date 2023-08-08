@@ -1,0 +1,103 @@
+<div class="px-3 py-5">
+  <div class="theme-container">
+    <mat-card class="p-0 o-hidden">
+      <div fxLayout="row wrap">
+        <div
+          fxFlex="100"
+          fxFlex.gt-sm="50"
+          class="p-0"
+          [style.background-image]="bgImage"
+          class="bg-cover"
+        ></div>
+        <div
+          fxFlex="100"
+          fxFlex.gt-sm="50"
+          class="py-3"
+          ngClass.gt-sm="px-5"
+          ngClass.sm="px-3"
+          ngClass.xs="px-3"
+        >
+          <div
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            class="text-center"
+          >
+            <h1 class="secondary-font">Sign In</h1>
+          </div>
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="onLoginFormSubmit(loginForm)"
+          >
+            <mat-form-field appearance="outline" class="w-100 mt-2">
+              <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                placeholder="Username"
+                formControlName="user_phonenumber"
+                required
+              />
+              <mat-error
+                *ngIf="loginForm.controls.user_phonenumber.errors?.required"
+                >Username is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  loginForm.controls.user_phonenumber.hasError('minlength')
+                "
+                >Username isn't long enough, minimum of 6 characters</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                formControlName="user_password"
+                required
+                [type]="hide ? 'password' : 'text'"
+              />
+              <mat-error
+                *ngIf="loginForm.controls.user_password.errors?.required"
+                >Password is required</mat-error
+              >
+              <mat-error
+                *ngIf="loginForm.controls.user_password.hasError('minlength')"
+                >Password isn't long enough, minimum of 6 characters</mat-error
+              >
+
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                type="button"
+                class="text-muted"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-error *ngIf="error">{{ error }}</mat-error>
+            <div class="text-center mt-2">
+              <button
+                mat-raised-button
+                color="accent"
+                class="uppercase"
+                type="submit"
+              >
+                Sign to My Account
+              </button>
+            </div>
+            <div
+              fxLayout="row"
+              fxLayoutAlign="space-between center"
+              class="mt-3"
+            ></div>
+          </form>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

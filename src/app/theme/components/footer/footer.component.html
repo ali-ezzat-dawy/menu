@@ -1,0 +1,47 @@
+<footer>
+  <div class="px-3">
+    <div class="theme-container">
+      <div class="py-5 content border-lighter">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+          <div fxFlex="100" fxFlex.gt-sm="30" ngClass.lt-md="pt-2">
+            <a class="logo" routerLink="/"><app-logo></app-logo></a>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="45">
+            <p fxLayout="row" fxLayoutAlign="start center" class="mt-2">
+              <mat-icon color="primary">location_on</mat-icon>
+              <span class="mx-2">2903 Avenue Z, Brooklyn, NY</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+              <mat-icon color="primary">call</mat-icon>
+              <span class="mx-2">01153208151</span>
+            </p>
+            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+              <mat-icon color="primary">schedule</mat-icon>
+              <span class="mx-2">Mon - Sun / 9:00AM - 2:00AM</span>
+            </p>
+            <app-social-icons
+              [iconSize]="'lg'"
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              class="desc"
+            ></app-social-icons>
+          </div>
+        </div>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="space-between center"
+        class="copyright py-1 text-center"
+      >
+        <p ngClass.xs="mt-1">Copyright © 2023 All Rights Reserved</p>
+        <p>
+          Designed & Developed by
+          <a mat-button href="https://www.linkedin.com/in/ali-ezzat-dawy/" color="warn" target="_blank">Ali Ezzat </a>
+          &
+          <a mat-button href="https://www.linkedin.com/in/mamdouh-mahmoud/" color="warn" target="_blank">Mamdouh Bakry</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
