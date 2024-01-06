@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit {
   public userImage = "assets/images/others/admin.jpg";
   public settings: Settings;
   public menuItems: Array<Menu> = [];
-  public toggleSearchBar: boolean = false;
+  public toggleSearchBar: boolean = true;
   constructor(
     public appSettings: AppSettings,
     public router: Router,

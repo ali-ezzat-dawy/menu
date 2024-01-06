@@ -1,0 +1,91 @@
+.menu-item {
+  height: 100%;
+  overflow: hidden;
+}
+.menu-item .thumbnail-section {
+  position: relative;
+}
+.menu-item .thumbnail-section .mat-mdc-chip-listbox {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  pointer-events: none;
+}
+.menu-item .title {
+  font-family: "Lora", serif;
+  font-size: 22px;
+}
+.menu-item .title a {
+  transition: 0.2s;
+  text-decoration: none;
+}
+.menu-item .features p {
+  margin-bottom: 8px;
+}
+.menu-item .features p span {
+  white-space: nowrap;
+}
+.menu-item .features p span.dots {
+  width: 100%;
+  margin: 10px 4px 0;
+}
+.menu-item .features p .mat-icon {
+  min-width: 24px;
+}
+.menu-item.grid-item.column-2 .title {
+  font-size: 28px;
+}
+.menu-item.grid-item.column-3 .title {
+  font-size: 22px;
+}
+.menu-item.list-item .title {
+  font-size: 28px;
+  margin-top: -8px;
+}
+.menu-item.list-item .features {
+  display: flex;
+  flex-flow: wrap;
+  place-content: center space-between;
+  align-items: center;
+}
+
+.ArtistPic {
+  width: 100% !important;
+  height: 250px !important;
+  border-radius: 8px;
+  background-size: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media screen and (max-width: 959px) {
+  .menu-item.grid-item .title {
+    font-size: 16px;
+  }
+  .menu-item.grid-item .description {
+    font-size: 12px;
+  }
+  .menu-item.grid-item.column-2 .title {
+    font-size: 12px;
+  }
+  .menu-item.grid-item.column-3 .title {
+    font-size: 18px;
+  }
+  .menu-item.list-item .title {
+    font-size: 22px;
+  }
+  .menu-item.list-item .features {
+    flex-direction: column;
+    place-content: start;
+    align-items: flex-start;
+  }
+}
+.price-cont {
+  position: relative;
+}
+
+.price-cur {
+  position: absolute;
+  top: -50%;
+  right: 50%;
+}/*# sourceMappingURL=menu-item.component.css.map */

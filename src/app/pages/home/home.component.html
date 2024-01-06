@@ -2,53 +2,16 @@
 
 <div class="section default mt-3">
   <div class="px-3">
-    <div class="theme-container">
-      <h1 class="section-title">Special menu</h1>
-      <p class="section-desc text-muted">
+    <div class="theme-container" *ngFor="let item of product">
+      <h1 class="section-title">{{item.category_name}}</h1>
+      <!-- <p class="section-desc text-muted">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </p>
-      <app-menu-items-carousel [menuItems]="pizza"></app-menu-items-carousel>
+      </p> -->
+      <app-menu-items-carousel [menuItems]="item.products"></app-menu-items-carousel>
       <div fxLayout="row" fxLayoutAlign="center center">
-        <a
-          mat-raised-button
-          routerLink="/menu"
-          color="primary"
-          class="uppercase"
-          >View all menu</a
-        >
+    
       </div>
     </div>
   </div>
 </div>
 
-<div class="section default mt-3">
-  <div class="px-3">
-    <div class="theme-container">
-      <h1 class="section-title">Our best dishes</h1>
-      <p class="section-desc text-muted">
-        The best dishes of the city for our clients.
-      </p>
-      <app-menu-items-carousel [menuItems]="pizza"></app-menu-items-carousel>
-      <div fxLayout="row" fxLayoutAlign="center center">
-        <a
-          mat-raised-button
-          routerLink="/menu"
-          color="primary"
-          class="uppercase"
-          >View all menu</a
-        >
-      </div>
-    </div>
-  </div>
-</div>
-<div class="section default mt-3">
-  <div class="px-3">
-    <div class="theme-container">
-      <h1 class="section-title">Pizza</h1>
-      <p class="section-desc text-muted">
-        The best Pizza of the city for our clients.
-      </p>
-      <app-menu-items-carousel [menuItems]="pizza"></app-menu-items-carousel>
-    </div>
-  </div>
-</div>

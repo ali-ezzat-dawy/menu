@@ -1,0 +1,56 @@
+.testimonials-carousel .swiper-container {
+  padding-bottom: 50px;
+}
+.testimonials-carousel .swiper-container .content {
+  max-width: 650px;
+  margin: 0 auto;
+}
+.testimonials-carousel .swiper-container .content img {
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+}
+.testimonials-carousel .swiper-container .content .quote {
+  font-size: 50px;
+  line-height: 14px;
+}
+.testimonials-carousel .swiper-container .content .quote.open {
+  margin-top: 24px;
+}
+.testimonials-carousel .swiper-container .content .quote.close {
+  margin-bottom: 24px;
+}
+.testimonials-carousel .swiper-container .content .text {
+  font-weight: 500;
+}
+
+.testimonials .testimonials-carousel .swiper-container {
+  padding-bottom: 50px;
+  max-width: 960px;
+}
+.testimonials .testimonials-carousel .swiper-container .content {
+  display: flex;
+  flex-direction: row;
+  max-width: 650px;
+  margin: 0 auto;
+}
+.testimonials .testimonials-carousel .swiper-container .content img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border: 4px solid red;
+}
+.testimonials .testimonials-carousel .swiper-container .content .quote {
+  font-size: 50px;
+  line-height: 14px;
+}
+.testimonials .testimonials-carousel .swiper-container .content .quote.open {
+  margin-top: 24px;
+}
+.testimonials .testimonials-carousel .swiper-container .content .quote.close {
+  margin-bottom: 24px;
+}
+.testimonials .testimonials-carousel .swiper-container .content .text {
+  font-weight: 500;
+  margin: 0 24px;
+}/*# sourceMappingURL=testimonials.component.css.map */

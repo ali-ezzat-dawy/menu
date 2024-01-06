@@ -30,8 +30,8 @@ export class MenuItemsCarouselComponent implements OnInit {
       preloadImages: false,
       lazy: true,   
       breakpoints: {
-        280: {
-          slidesPerView: 1.2
+        200: {
+          slidesPerView: 1.5
         },
         600: {
           slidesPerView: 2

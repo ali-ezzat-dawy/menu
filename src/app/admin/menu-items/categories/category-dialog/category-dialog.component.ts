@@ -6,7 +6,6 @@ import {
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Category } from "src/app/app.models";
-import { AppService } from "src/app/app.service";
 
 @Component({
   selector: "app-category-dialog",
@@ -18,8 +17,7 @@ export class CategoryDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CategoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public category: Category,
-    public fb: UntypedFormBuilder,
-    private AppService: AppService
+    public fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -33,25 +31,8 @@ export class CategoryDialogComponent implements OnInit {
   }
 
   public onSubmit() {
- 
     if (this.form.valid) {
-          this.dialogRef.close(this.form.value);
+      this.dialogRef.close(this.form.value);
     }
   }
 }
-// public onSubmit() {
-//   let catData = {
-//     category_name: this.form.value.category_name,
-//   };
-//   this._AdminService.addCatogery(catData).subscribe(
-//     (res) => {
-//       console.log(res);
-//       if (this.form.valid) {
-//         this.dialogRef.close(this.form.value);
-//       }
-//     },
-//     (err) => {
-//       console.log(err);
-//     }
-//   );
-// }

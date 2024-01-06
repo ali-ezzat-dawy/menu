@@ -18,10 +18,18 @@ export class MenuItemComponent implements OnInit {
   constructor(public appService:AppService) { }
 
   ngOnInit(): void {
-    // this.appService.getPizza().subscribe((res:any)=>{
-    //   this.pizza = res.recipes;
-    // })
+
   }
+  public arrayBufferToBase64( buffer: Iterable<number> ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+  }
+
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}){  
     if(changes.viewColChanged){

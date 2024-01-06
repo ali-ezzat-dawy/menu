@@ -1,90 +1,95 @@
-<div class="p-2">
-    <mat-card>
-      <mat-card-content>
-        <form
-          [formGroup]="form"
-          (ngSubmit)="onSubmit()"
-          autocomplete="off"
-          fxLayout="row wrap"
-        >
-          <div fxFlex="100" fxFlex.gt-sm="35" class="px-2" *ngIf="showImage">
-            <div fxLayout="row wrap" [style.minHeight.px]="132">
-              <div *ngFor="let file of files" class="w-100"> 
-                  <img [src]="file.content" alt="image" class="d-block w-100 mat-elevation-z2">
-              </div> 
-              <img *ngIf="!file" src="assets/images/others/noimage.png" class="d-block w-100 mat-elevation-z2">
-          </div>
-          <div class="file-upload mb-2">  
-              <input *ngIf="!file" id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange($event)" /> 
-              <button *ngIf="!file" mat-raised-button color="primary" class="uppercase w-100" value="upload file" type="button" (click)="fileUploadClick()">{{ 'BTN.UPLOAD' | translate }}</button>
-              <button *ngIf="file" mat-raised-button color="warn" class="uppercase w-100" type="button" (click)="deleteFile()">{{ 'BTN.REMOVE' | translate }}</button>
-          </div> 
-          </div>
-          <div fxFlex="100" fxFlex.gt-sm="65" class="px-2 mt-0">
-            <div fxLayout="row wrap">
-              <div fxFlex="100" fxFlex.gt-sm="40" class="px-3">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Name</mat-label>
-                  <input matInput formControlName="product_name" required />
-                  <mat-error *ngIf="form.controls.product_name.errors?.required"
-                    >Name is required</mat-error
-                  >
-                  <mat-error
-                    *ngIf="form.controls.product_name.hasError('minlength')"
-                    >Name isn't long enough, minimum of 4 characters</mat-error
-                  >
-                </mat-form-field>
-              </div>
-              <div fxFlex="100" fxFlex.gt-sm="35" class="px-3">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Category</mat-label>
-                  <mat-select formControlName="categoryId" required>
-                    <mat-option
-                      *ngFor="let cat of appService.Data.categories"
-                      [value]="cat.id"
-                    >
-                      <span>{{ cat.category_name }}</span>
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="form.controls.categoryId.errors?.required"
-                    >Category is required</mat-error
-                  >
-                </mat-form-field>
-              </div>
-              <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Price</mat-label>
-                  <input matInput formControlName="product_price" required />
-                  <mat-error *ngIf="form.controls.product_price.errors?.required"
-                    >Price is required</mat-error
-                  >
-                </mat-form-field>
-              </div>
-  
-              <div fxFlex="100" class="px-3">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Description</mat-label>
-                  <textarea
-                    matInput
-                    formControlName="product_description"
-                    rows="7"
-                  ></textarea>
-                </mat-form-field>
-              </div>
-              <div fxFlex="100" class="mt-2 text-center w-100">
-                <button
-                  mat-raised-button
-                  color="primary"
-                  type="submit"
-                  class="uppercase"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
+<div class="header bg-primary">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <h2 class="fw-500 secondary-font">
+      {{ menuItem ? "Edit" : "Add" }} Menu Item
+    </h2>
   </div>
-  
+</div>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  autocomplete="off"
+  class="pt-3"
+>
+  <div mat-dialog-content>
+    <div fxFlex="100" fxFlex.gt-sm="35" class="px-2">
+      <img [src]="imgUrl" class="d-block w-100 mat-elevation-z2" />
+      <div class="file-upload mb-2 ">
+        <input
+          *ngIf="!file"
+          id="singleFileUploader"
+          type="file"
+          color="primary"
+          [accept]="acceptTypes"
+          (change)="onSelectFile($event)"
+          (click)="fileUploadClick()"
+          class=""
+        />
+         <h3>Upload File</h3> 
+      </div>
+    </div>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="65" class="px-2 mt-0">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="40" class="px-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="product_name" required />
+              <mat-error *ngIf="form.controls.product_name.errors?.required"
+                >Name is required</mat-error
+              >
+              <mat-error
+                *ngIf="form.controls.product_name.hasError('minlength')"
+                >Name isn't long enough, minimum of 4 characters</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="35" class="px-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="categoryId" required>
+                <mat-option
+                  *ngFor="let cat of appService.Data.categories"
+                  [value]="cat.id"
+                >
+                  <span>{{ cat.category_name }}</span>
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls.categoryId.errors?.required"
+                >Category is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" class="px-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Price</mat-label>
+              <input matInput formControlName="product_price" required />
+              <mat-error *ngIf="form.controls.product_price.errors?.required"
+                >Price is required</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" class="px-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                formControlName="product_description"
+                rows="7"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+      <button mat-raised-button color="warn" type="button" mat-dialog-close>
+        Close
+      </button>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </div>
+  </div>
+</form>

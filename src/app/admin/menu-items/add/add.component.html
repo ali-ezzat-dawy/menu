@@ -15,7 +15,7 @@
             <img *ngIf="!file" src="assets/images/others/noimage.png" class="d-block w-100 mat-elevation-z2">
         </div>
         <div class="file-upload mb-2">  
-            <input *ngIf="!file" id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange($event)" /> 
+            <input *ngIf="!file" id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange($event)"/> 
             <button *ngIf="!file" mat-raised-button color="primary" class="uppercase w-100" value="upload file" type="button" (click)="fileUploadClick()">{{ 'BTN.UPLOAD' | translate }}</button>
             <button *ngIf="file" mat-raised-button color="warn" class="uppercase w-100" type="button" (click)="deleteFile()">{{ 'BTN.REMOVE' | translate }}</button>
         </div> 

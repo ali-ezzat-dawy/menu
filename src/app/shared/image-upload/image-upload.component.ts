@@ -7,7 +7,7 @@ import { AppService } from 'src/app/app.service';
   styleUrls: ['./image-upload.component.scss']
 })
 export class ImageUploadComponent implements OnInit {
-  @Input('base64') base64:string = ''; 
+  @Input('base64') base64:any[] = []; 
   @Input('fileSize') fileSize = 500;  
   @Input('acceptTypes') acceptTypes:any; 
   @Output() onFileChange: EventEmitter<any> = new EventEmitter(); 
@@ -86,13 +86,14 @@ export class ImageUploadComponent implements OnInit {
 
   public deleteFile() {  
     const message = this.appService.getTranslateValue('MESSAGE.SURE_DELETE');
-  //   dialogRef.afterClosed().subscribe(dialogResult => {
-  //     if(dialogResult){
-  //       this.files.length = 0;          
-  //       this.onFileChange.emit(this.files);
-  //       this.clearInput();   
-  //     }
-  //   });  
+    let dialogRef = this.appService.openConfirmDialog('', message!);
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult){
+        this.files.length = 0;          
+        this.onFileChange.emit(this.files);
+        this.clearInput();   
+      }
+    });  
   }  
 
 }

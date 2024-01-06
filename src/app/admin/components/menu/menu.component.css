@@ -1,0 +1,57 @@
+.menu-item .mat-mdc-button {
+  width: 100%;
+  font-weight: 400;
+  height: 42px;
+  padding-left: 10px;
+  border-radius: 0;
+}
+.menu-item .mat-mdc-button .mat-icon.menu-icon {
+  margin-right: 12px;
+  padding: 7px;
+  border-radius: 50%;
+}
+.menu-item .mat-mdc-button .mat-icon.menu-expand-icon {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+}
+.menu-item .mat-mdc-button.expanded .menu-expand-icon {
+  transform: rotate(180deg);
+}
+
+.sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 60px;
+}
+.sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 80px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 100px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 120px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 140px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 160px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 180px;
+}
+.sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .sub-menu .mat-mdc-button {
+  padding-left: 200px;
+}
+.sub-menu .mat-mdc-button {
+  padding-left: 40px;
+}
+.sub-menu.show {
+  max-height: 900px;
+  transition: max-height 0.25s ease-in;
+}/*# sourceMappingURL=menu.component.css.map */

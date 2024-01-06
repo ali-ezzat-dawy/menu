@@ -59,14 +59,14 @@ export class Reservation {
     public customer: Customer,
     public guests: number,
     public tableNumber: number,
-    public status: ReservationStatus
+    // public status: ReservationStatus
   ) {}
 }
 
 // Approved, Cancelled, Pending
-export class ReservationStatus {
-  constructor(public id: number, public name: string) {}
-}
+// export class ReservationStatus {
+//   constructor(public id: number, public name: string) {}
+// }
 
 export class Order {
   constructor(
@@ -85,28 +85,20 @@ export class OrderStatus {
 }
 
 export class MenuItem {
+  static image: string;
   constructor(
     public id: number,
-    public title: string,
-    public image_url: string,
-    public ingredients: string,
-    public social_rank: string,
-    public name: string,
-    public description: string,
-    public price: number,
-    public image: MenuItemImage,
-    public discount: number,
-    public ratingsCount: number,
-    public ratingsValue: number,
-    public availibilityCount: number,
-    public cartCount: number,
-    public weight: number,
-    public isVegetarian: boolean,
     public categoryId: number,
     public product_name: string,
+   
+    public name: string,
     public product_description: string,
+    public description:string,
     public product_price: number,
-    public user_personal_image: MenuItemImage
+    public price: number,
+    public user_personal_image: MenuItemImage ,
+    public  image: MenuItemImage,
+    public category_name:any
   ) {}
 }
 

@@ -39,6 +39,7 @@ import { VerticalMenuComponent } from "./theme/components/menu/vertical-menu/ver
 import { FooterComponent } from "./theme/components/footer/footer.component";
 import { LockScreenComponent } from "./pages/lock-screen/lock-screen.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +69,7 @@ import { LockScreenComponent } from "./pages/lock-screen/lock-screen.component";
     }),
     AppRoutingModule,
     SharedModule,
+    
   ],
   providers: [
     AppSettings,

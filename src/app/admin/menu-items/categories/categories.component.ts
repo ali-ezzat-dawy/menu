@@ -3,7 +3,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Category } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
 import { CategoryDialogComponent } from "./category-dialog/category-dialog.component";
 
@@ -21,11 +20,11 @@ export class CategoriesComponent implements OnInit {
   constructor(public appService: AppService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    
     this.getAllCategories();
   }
   getAllCategories() {
     this.appService.getCategories().subscribe((categories: any) => {
-      console.log(categories.allCategories);
       this.initDataSource(categories.allCategories);
     });
   }
@@ -51,7 +50,7 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  public openCategoryDialog(category: any | null) {
+  public addCategory(category: any | null) {
     const dialogRef = this.appService.openDialog(
       CategoryDialogComponent,
       category,
@@ -74,7 +73,6 @@ export class CategoriesComponent implements OnInit {
         );
         this.paginator.lastPage();
         message = "New category " + cat.category_name + " added successfully!";
-        // }
         this.initDataSource(this.dataSource.data);
         this.snackBar.open(message, "×", {
           panelClass: "success",
@@ -84,7 +82,8 @@ export class CategoriesComponent implements OnInit {
       }
     });
   }
-  public openCategoryDialogForEdit(category: any | null) {
+  public editCategory(category: any | null) {
+    console.log(category)
     const dialogRef = this.appService.openDialog(
       CategoryDialogComponent,
       category,
@@ -105,7 +104,7 @@ export class CategoriesComponent implements OnInit {
           }
         );
         this.paginator.lastPage();
-        message = "New category " + cat.category_name + " added successfully!";
+        message = "Category " + cat.category_name + " edited successfully!";
         // }
         this.initDataSource(this.dataSource.data);
         this.snackBar.open(message, "×", {

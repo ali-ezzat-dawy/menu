@@ -1,37 +1,37 @@
-import { Component, Inject, OnInit, PLATFORM_ID , Output, EventEmitter, Input } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+} from "@angular/core";
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { Category } from "src/app/app.models";
 import { AppService } from "src/app/app.service";
-import { isPlatformBrowser } from "@angular/common";
 import { MenuItem } from "src/app/app.models";
 
 @Component({
-  selector: 'app-add-dialog',
-  templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.scss']
+  selector: "app-add-dialog",
+  templateUrl: "./add-dialog.component.html",
+  styleUrls: ["./add-dialog.component.scss"],
 })
-export class AddDialogComponent {
+export class AddDialogComponent implements OnInit {
+  public imgUrl: any = "assets/images/others/noimage.png";
   public form!: UntypedFormGroup;
-  private sub: any;
-  public id: any;
-  public showImage: boolean = false;
-  file : any; 
-  @Output() onFileChange: EventEmitter<any> = new EventEmitter(); 
+  @Output() onFileChange: EventEmitter<any> = new EventEmitter();
   @Output() onFileUploadClick: EventEmitter<any> = new EventEmitter();
-  @Input('fileSize') fileSize = 500;  
-  @Input('acceptTypes') acceptTypes:any; 
-  imgFile: any;
+  file: any;
+  select: any = "";
   constructor(
+    public dialogRef: MatDialogRef<AddDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public menuItem: MenuItem,
     public appService: AppService,
     public formBuilder: UntypedFormBuilder,
-    private activatedRoute: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnInit(): void {
@@ -48,66 +48,68 @@ export class AddDialogComponent {
       user_personal_image: [null, Validators.required],
       categoryId: [null, Validators.required],
     });
+
+    if (this.menuItem) {
+      this.form.patchValue({
+        product_name:this.menuItem.name,
+        product_description:this.menuItem.description,
+        product_price:this.menuItem.price,
+        user_personal_image:this.file,
+        categoryId:this.menuItem.categoryId
+        });
+        this.imgUrl = this.menuItem.image;
+    }
     this.getCategories();
-    this.sub = this.activatedRoute.params.subscribe((params) => {
-      if (params["id"]) {
-        this.id = params["id"];
-        this.getMenuItemById();
-      } else {
-        this.showImage = true;
-      }
-    });
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  public onSelectFile(e: any) {
+    this.file = e.target.files[0];
+    if (e.target.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.imgUrl = event.target.result;
+      };
+    }
+
+    console.log(this.file);
+    this.onFileChange.emit(this.file);
+  }
+  public fileUploadClick() {
+    this.onFileUploadClick.emit();
   }
 
   public getCategories() {
-    if (!this.appService.Data.categories.length) {
-      this.appService.getCategories().subscribe((categories) => {
-        this.appService.Data.categories = categories.allCategories;
-      });
-    }
-  }
-  
-  public getMenuItemById() {
-    this.appService.getMenuItemById(this.id).subscribe((menuItem: MenuItem) => {
-      this.form.patchValue(menuItem);
-      if (isPlatformBrowser(this.platformId)) {
-        this.appService.convertImgToBase64(
-          menuItem.user_personal_image.medium,
-          (dataUrl: string) => {
-            this.showImage = true;
-            this.form.controls.user_personal_image.patchValue(
-              dataUrl.toString()
-            );
-          }
-        );
-      }
+    this.appService.getCategories().subscribe((categories) => {
+      this.appService.Data.categories = categories.allCategories;
     });
   }
 
 
-
-    fileChange(event : any){
-      this.file = event.target.files[0]
-      console.log( "file" , this.file )
-    }
-    public fileUploadClick(){ 
-      this.onFileUploadClick.emit();
-    }
+public deleteFile() { 
+ console.log('remove' , this.file)  
+ this.imgUrl = '';
+ this.fileUploadClick()
+ 
+  }  
   public onSubmit() {
-    let formData = new FormData()
-    formData.append("categoryId" , this.form.value.categoryId)
-    formData.append("product_name" , this.form.value.product_name)
-    formData.append("product_price" ,this.form.value.product_price )
-    formData.append("product_description" , this.form.value.product_description)
-    formData.append("user_personal_image" , this.file )
+   
+    let formData = new FormData();
 
-    this.appService.addItem(formData).subscribe(
-      (response) => {console.log(response)},(error) => {console.log(error);}
-    );
+    if(this.file){
+      formData.append("categoryId", this.form.value.categoryId);
+      formData.append("product_name", this.form.value.product_name);
+      formData.append("product_price", this.form.value.product_price);
+      formData.append("product_description", this.form.value.product_description);
+      formData.append("user_personal_image", this.file);
+    }else{
+      formData.append("categoryId", this.form.value.categoryId);
+      formData.append("product_name", this.form.value.product_name);
+      formData.append("product_price", this.form.value.product_price);
+      formData.append("product_description", this.form.value.product_description);
+    }
+    this.dialogRef.close(formData);
+    console.log(formData)
+
   }
-
 }

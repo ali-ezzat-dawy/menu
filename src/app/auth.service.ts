@@ -1,14 +1,13 @@
 import { BehaviorSubject, Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment.prod";
 import jwtDecode from "jwt-decode";
 import { Router } from "@angular/router";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private url = environment.url;
+  private url = "https://backend.menu-list.online";
   userData = new BehaviorSubject(null);
   constructor(private _HttpClient: HttpClient,private _Router:Router) {
     if(localStorage.getItem('userToken') !=null){

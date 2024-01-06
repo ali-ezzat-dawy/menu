@@ -1,0 +1,56 @@
+.admin-sidenav {
+  position: fixed;
+  width: 250px;
+  border: none !important;
+  padding-top: 56px;
+  bottom: 0;
+  top: 0;
+}
+.admin-sidenav .close {
+  margin-left: 178px;
+}
+.admin-sidenav .divider {
+  margin: 8px 0;
+}
+.admin-sidenav .vertical-menu-wrapper {
+  height: calc(100% - 122px);
+}
+
+.admin-toolbar {
+  height: 56px;
+  position: fixed;
+  z-index: 9;
+}
+.admin-toolbar .logo-section {
+  width: 234px;
+}
+
+.admin-container .mat-drawer-content {
+  padding: 16px;
+  padding-top: 72px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.pin {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: currentColor;
+}
+
+.search-bar form input {
+  height: 28px;
+  border: none;
+  padding: 0;
+  border-radius: 15px;
+  outline: none;
+  color: #444;
+  width: 0;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.search-bar form input.show {
+  padding: 0 8px;
+  width: 250px;
+}/*# sourceMappingURL=admin.component.css.map */

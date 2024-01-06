@@ -46,7 +46,7 @@ export class AppService {
   );
 
   public url = environment.url + "/assets/data/";
-  public urlTow = "http://localhost:7688";
+  public urlTow = "https://backend.menu-list.online";
 
   constructor(
     public http: HttpClient,
@@ -58,10 +58,16 @@ export class AppService {
     public translateService: TranslateService
   ) {}
 
+  // public getMenuItems(): Observable<MenuItem[]> {
+  //   return this.http.get<MenuItem[]>(this.url + "menu-items.json");
+  // }
   public getMenuItems(): Observable<MenuItem[]> {
-    return this.http.get<MenuItem[]>(this.url + "menu-items.json");
+    return this.http.get<MenuItem[]>(this.urlTow + "/product");
   }
-
+  public getMenuItemsForUser(): Observable<MenuItem[]> {
+    return this.http.get<MenuItem[]>(this.urlTow + "/product/cat-items");
+  }
+// localhost:7688/product/cat-items
   public getMenuItemById(id: number): Observable<MenuItem> {
     return this.http.get<MenuItem>(this.url + "menu-item-" + id + ".json");
   }
@@ -86,63 +92,58 @@ export class AppService {
   addCatogery(obj: any): Observable<any> {
     let token = localStorage.getItem("userToken");
     let headers = {
-      "x-access-token": JSON.parse(token)
+      "x-access-token": JSON.parse(token),
     };
     return this.http.post(`${this.urlTow}/category/add-category`, obj, {
-      headers: headers
+      headers: headers,
     });
   }
   addItem(obj: any): Observable<any> {
     let token = localStorage.getItem("userToken");
     let headers = {
-      "x-access-token": JSON.parse(token)
+      "x-access-token": JSON.parse(token),
     };
     return this.http.post(`${this.urlTow}/product/add-product`, obj, {
-      headers: headers
+      headers: headers,
+    });
+  }
+  editItem(id: any, obj: any): Observable<any> {
+    let token = localStorage.getItem("userToken");
+    let headers = {
+      "x-access-token": JSON.parse(token),
+    };
+    return this.http.patch(`${this.urlTow}/product/edit-product/${id}`, obj, {
+      headers: headers,
+    });
+  }
+  removeItem(id: any): Observable<any> {
+    let token = localStorage.getItem("userToken");
+    let headers = {
+      "x-access-token": JSON.parse(token),
+    };
+    return this.http.delete(`${this.urlTow}/product/delete-product/${id}`, {
+      headers,
     });
   }
   removeCatogery(id: any): Observable<any> {
     let token = localStorage.getItem("userToken");
     let headers = {
-      "x-access-token": JSON.parse(token)
+      "x-access-token": JSON.parse(token),
     };
-    return this.http.delete(
-      `${this.urlTow}/category/delete-category/${id}`,
-      {
-        headers
-      }
-    );
+    return this.http.delete(`${this.urlTow}/category/delete-category/${id}`, {
+      headers,
+    });
   }
-  editCatogery(id:any , obj:any): Observable<any> {
+  editCatogery(id: any, obj: any): Observable<any> {
     let token = localStorage.getItem("userToken");
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.patch(
-      `${this.urlTow}/category/edit-category/${id}`, obj ,
-      {
-        headers
-      }
-    );
+    return this.http.patch(`${this.urlTow}/category/edit-category/${id}`, obj, {
+      headers,
+    });
   }
-  // addCatogery(obj: any): Observable<any> {
-  //   let token = localStorage.getItem("userToken");
-  //   let headers = {
-  //     "x-access-token": JSON.parse(token),
-  //   };
-  //   return this.http.post(`${this.url}/category/add-category`, obj, {
-  //     headers: headers,
-  //   });
-  // }
-  // removeCatogery(id: any): Observable<any> {
-  //   let token = localStorage.getItem("userToken");
-  //   let headers = {
-  //     "x-access-token": JSON.parse(token),
-  //   };
-  //   return this.http.delete(`${this.url}/category/delete-category/${id}`, {
-  //     headers: headers,
-  //   });
-  // }
+
   public getHomeCarouselSlides() {
     return this.http.get<any[]>(this.url + "slides.json");
   }
@@ -178,7 +179,6 @@ export class AppService {
 
   public openAlertDialog(message: string) {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
-      maxWidth: "400px",
       data: message,
     });
     return dialogRef;
@@ -196,13 +196,13 @@ export class AppService {
 
   public filterData(
     data: any,
-    categoryId: number,
+    category_name: string,
     sort?: string,
     page?: number,
     perPage?: number
   ) {
-    if (categoryId) {
-      data = data.filter((item: any) => item.categoryId == categoryId);
+    if (category_name) {
+      data = data.filter((item: any) => item.category_name == category_name);
     }
 
     //for show more properties mock data

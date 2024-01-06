@@ -1,0 +1,58 @@
+.lock-screen {
+  position: relative;
+}
+.lock-screen:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../../assets/images/others/default-bg.png");
+  background-repeat: repeat;
+  background-size: 350px;
+  background-position: center;
+  opacity: 1;
+}
+.lock-screen form {
+  position: relative;
+}
+.lock-screen form .name {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.lock-screen form img {
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  border: 8px solid #fff;
+}
+.lock-screen form input {
+  background: #fff;
+  padding: 16px 44px 16px 16px;
+  width: 140px;
+  margin-left: -6px;
+  border: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  text-align: center;
+  outline: none;
+  box-shadow: 4px 0px 4px -2px rgba(0, 0, 0, 0.2), 4px 3px 4px 0px rgba(0, 0, 0, 0.14), 4px 1px 4px 0px rgba(0, 0, 0, 0.12);
+}
+.lock-screen form a {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  margin: 0;
+  font-size: 13px;
+}
+.lock-screen form button.submit {
+  margin-left: -44px;
+}
+.lock-screen p.time {
+  font-size: 48px;
+  margin-top: 16px;
+}/*# sourceMappingURL=lock-screen.component.css.map */

@@ -24,6 +24,7 @@ export class AddComponent implements OnInit {
   @Input('fileSize') fileSize = 500;  
   @Input('acceptTypes') acceptTypes:any; 
   imgFile: any;
+  base64: any;
   constructor(
     public appService: AppService,
     public formBuilder: UntypedFormBuilder,
@@ -31,6 +32,13 @@ export class AddComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnInit(): void {
+    if(this.base64){ 
+      this.file.push({
+        name: 'image-' + new Date().getDate, 
+        content: this.base64,
+        size: null
+      })
+    } 
     this.form = this.formBuilder.group({
       product_name: [
         null,
@@ -85,13 +93,17 @@ export class AddComponent implements OnInit {
 
 
 
-    fileChange(event : any){
+    // fileChange(event : any){
+    //   this.file = event.target.files[0]
+    //   console.log( "file" , this.file )
+    // }
+    // public fileUploadClick(){ 
+    //   this.onFileUploadClick.emit();
+    // }
+    public fileChange(event:any){ 
       this.file = event.target.files[0]
-      console.log( "file" , this.file )
-    }
-    public fileUploadClick(){ 
-      this.onFileUploadClick.emit();
-    }
+      console.log(this.file)
+    } 
   public onSubmit() {
     let formData = new FormData()
     formData.append("categoryId" , this.form.value.categoryId)
