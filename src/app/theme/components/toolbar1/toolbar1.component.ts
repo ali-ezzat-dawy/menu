@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AppService } from 'src/app/app.service'; 
+import { CartOverviewComponent } from 'src/app/shared/cart-overview/cart-overview.component'; 
 
 @Component({
   selector: 'app-toolbar1',
@@ -14,6 +15,8 @@ export class Toolbar1Component implements OnInit {
   public sidenavToggle(){
     this.onMenuIconClick.emit();
   }
-
+  public openCart(){ 
+    this.appService.openCart(CartOverviewComponent)
+  }
 
 }

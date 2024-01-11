@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { MenuItem } from 'src/app/app.models';
 import { AppService } from 'src/app/app.service';
+import { CartOverviewComponent } from '../cart-overview/cart-overview.component';
 
 @Component({
   selector: 'app-menu-item',
@@ -51,5 +52,14 @@ export class MenuItemComponent implements OnInit {
       this.column = 1;
     }
   }
+  public addToCart(){ 
+    this.appService.addToCart(this.menuItem, CartOverviewComponent); 
+  }
 
+  public onCart(){
+    if(this.appService.Data.cartList.find(item=>item.id == this.menuItem.id)){
+      return true;
+    }
+    return false;
+  }
 }

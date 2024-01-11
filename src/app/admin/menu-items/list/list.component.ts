@@ -15,7 +15,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class ListComponent implements OnInit {
   public form!: UntypedFormGroup;
-  file: any;
+  // file: any;
   displayedColumns: string[] = [
     "id",
     "image",
@@ -37,8 +37,12 @@ export class ListComponent implements OnInit {
   }
   getAllCategories() {
     this.appService.getCategories().subscribe(
-    (categories: any) => {this.appService.Data.categories = categories.allCategories;},
-    (err)=>{console.log("error" , err)}
+      (categories: any) => {
+        this.appService.Data.categories = categories.allCategories;
+      },
+      (err) => {
+        console.log("error", err);
+      }
     );
   }
   getData(data: any) {
@@ -82,21 +86,27 @@ export class ListComponent implements OnInit {
       "theme-dialog"
     );
     dialogRef.afterClosed().subscribe((item) => {
-      console.log('Add',item);
+      console.log("Add", item);
 
       let message = "";
       if (item) {
         this.appService.addItem(item).subscribe(
           (res) => {
+            console.log("Res", res);
             this.getMenuItems();
-            console.log(res);
+            message = "New Item " + " added successfully!";
+            this.snackBar.open(message, "×", {
+              panelClass: "success",
+              verticalPosition: "top",
+              duration: 3000,
+            });
           },
           (error) => {
             console.log(error);
           }
         );
         this.paginator.lastPage();
-        message = "New Item " + menuItem.name + " added successfully!";
+        message = "New Item " + " added successfully!";
         this.initDataSource(this.dataSource.data);
         this.snackBar.open(message, "×", {
           panelClass: "success",
@@ -108,29 +118,51 @@ export class ListComponent implements OnInit {
   }
   public openEditItemDialog(menuItem: any | null) {
     console.log(menuItem);
-    
+
     const dialogRef = this.appService.openDialog(
       AddDialogComponent,
       menuItem,
       "theme-dialog"
     );
     dialogRef.afterClosed().subscribe((item) => {
-      console.log('edit',item);
-      console.log(menuItem.id);
-      console.log('edit',menuItem);
       let message = "";
       if (item) {
-        this.appService.editItem(menuItem.id, item).subscribe(
-          (res) => {
-            console.log(res);
-            this.getMenuItems();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        if (item.product_name) {
+          this.appService.editItemWithoutFile(menuItem.id, item).subscribe(
+            (res) => {
+              console.log(res);
+              this.getMenuItems();
+              message = "Edit Item " + menuItem.name + " Edited successfully!";
+              this.snackBar.open(message, "×", {
+                panelClass: "success",
+                verticalPosition: "top",
+                duration: 3000,
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        } else {
+          console.log("Edit item with File", item);
+          this.appService.editItem(menuItem.id, item).subscribe(
+            (res) => {
+              console.log(res);
+              this.getMenuItems();
+              message = "Edit Item " + menuItem.name + " Edited successfully!";
+              this.snackBar.open(message, "×", {
+                panelClass: "success",
+                verticalPosition: "top",
+                duration: 3000,
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
         this.paginator.lastPage();
-        message = "Edit Item " + menuItem.name + " Edited successfully!";
+
         this.initDataSource(this.dataSource.data);
         this.snackBar.open(message, "×", {
           panelClass: "success",

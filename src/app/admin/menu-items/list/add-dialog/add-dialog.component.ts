@@ -26,7 +26,7 @@ export class AddDialogComponent implements OnInit {
   @Output() onFileChange: EventEmitter<any> = new EventEmitter();
   @Output() onFileUploadClick: EventEmitter<any> = new EventEmitter();
   file: any;
-  select: any = "";
+  fileSize: any;
   constructor(
     public dialogRef: MatDialogRef<AddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public menuItem: MenuItem,
@@ -38,26 +38,23 @@ export class AddDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       product_name: [
         null,
-        Validators.compose([Validators.required, Validators.minLength(4)]),
+        Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
-      product_description: [
-        null,
-        Validators.compose([Validators.required, Validators.minLength(4)]),
-      ],
+      product_description:'',
       product_price: [null, Validators.required],
-      user_personal_image: [null, Validators.required],
+      user_personal_image: [null],
       categoryId: [null, Validators.required],
     });
 
     if (this.menuItem) {
       this.form.patchValue({
-        product_name:this.menuItem.name,
-        product_description:this.menuItem.description,
-        product_price:this.menuItem.price,
-        user_personal_image:this.file,
-        categoryId:this.menuItem.categoryId
-        });
-        this.imgUrl = this.menuItem.image;
+        product_name: this.menuItem.name,
+        product_description: this.menuItem.description,
+        product_price: this.menuItem.price,
+        user_personal_image: this.file,
+        categoryId: this.menuItem.categoryId,
+      });
+      this.imgUrl = this.menuItem.image;
     }
     this.getCategories();
   }
@@ -75,6 +72,25 @@ export class AddDialogComponent implements OnInit {
     console.log(this.file);
     this.onFileChange.emit(this.file);
   }
+  public clearInput() {
+    if (this.file) {
+      if (document.getElementById("singleFileUploader")) {
+        (<HTMLInputElement>(
+          document.getElementById("singleFileUploader")
+        )).value = "";
+      }
+    }
+  }
+
+  public deleteFile() {
+    const message = this.appService.getTranslateValue("MESSAGE.SURE_DELETE");
+    let dialogRef = this.appService.openConfirmDialog("", message!);
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult) {
+        this.clearInput();
+      }
+    });
+  }
   public fileUploadClick() {
     this.onFileUploadClick.emit();
   }
@@ -85,31 +101,29 @@ export class AddDialogComponent implements OnInit {
     });
   }
 
-
-public deleteFile() { 
- console.log('remove' , this.file)  
- this.imgUrl = '';
- this.fileUploadClick()
- 
-  }  
   public onSubmit() {
-   
-    let formData = new FormData();
-
-    if(this.file){
-      formData.append("categoryId", this.form.value.categoryId);
-      formData.append("product_name", this.form.value.product_name);
-      formData.append("product_price", this.form.value.product_price);
-      formData.append("product_description", this.form.value.product_description);
-      formData.append("user_personal_image", this.file);
-    }else{
-      formData.append("categoryId", this.form.value.categoryId);
-      formData.append("product_name", this.form.value.product_name);
-      formData.append("product_price", this.form.value.product_price);
-      formData.append("product_description", this.form.value.product_description);
+    if (this.form.valid) {
+      if (this.file) {
+        let formData = new FormData();
+        formData.append("categoryId", this.form.value.categoryId);
+        formData.append("product_name", this.form.value.product_name);
+        formData.append("product_price", this.form.value.product_price);
+        formData.append(
+          "product_description",
+          this.form.value.product_description
+        );
+        formData.append("user_personal_image", this.file);
+        this.dialogRef.close(formData);
+      } else {
+        let formDataWithoutFile = {
+          product_name: this.form.value.product_name,
+          product_description: this.form.value.product_description,
+          product_price: this.form.value.product_price,
+          categoryId: this.form.value.categoryId,
+        };
+        this.dialogRef.close(formDataWithoutFile);
+        console.log("formData", formDataWithoutFile);
+      }
     }
-    this.dialogRef.close(formData);
-    console.log(formData)
-
   }
 }

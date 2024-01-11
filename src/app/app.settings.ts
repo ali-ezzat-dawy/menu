@@ -23,11 +23,11 @@ export class Settings {
 @Injectable()
 export class AppSettings {
   public settings = new Settings(
-    "ElRoof", // theme name
+    "Mox", // theme name
     "green", // red, green, blue, pink, purple, grey, orange-dark, custom
     1, // 1
-    true, // true = sticky, false = not sticky
-    "default", // default, image, carousel
+    false, // true = sticky, false = not sticky
+    "carousel", // default, image, carousel
     true, // true = rtl, false = ltr
     true, // adminSidenavIsOpened
     true, // adminSidenavIsPinned

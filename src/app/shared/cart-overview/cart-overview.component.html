@@ -1,0 +1,48 @@
+<mat-list *ngIf="appService.Data.cartList.length" class="cart-items">
+    <mat-list-item>
+        <div fxLayout="row" fxLayoutAlign="center center" class="w-100 -3">
+
+                <button mat-icon-button (click)="hideSheet(false)" matTooltip="Hide" class="p-0">
+                    <mat-icon color="primary" class="mat-icon-lg">arrow_drop_down_circle</mat-icon> 
+                  </button>
+            
+        </div> 
+    </mat-list-item>
+    <mat-list-item>
+        <div class="w-100 divider"></div> 
+    </mat-list-item>
+    <mat-list-item *ngFor="let menuItem of appService.Data.cartList">
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="py-2">
+            <h3 class=" fw-500 title">{{menuItem.name}}</h3>  
+            <div fxLayout="row" fxLayoutAlign="end center">
+
+                <span  class="primary-color fw-500 mx-3"> 
+                    {{menuItem.price  }}ج
+                </span> 
+ 
+                <div class="px-2" >
+                    <app-quantity-counter [value]="menuItem.cartCount" [step]="1" [min]="1" [max]="1000" [small]="true" (onCounterChange)="counterChange(menuItem, $event)"></app-quantity-counter>
+                </div>  
+                <button mat-icon-button color="warn" class="remove" (click)="remove(menuItem, $event)" matTooltip="Remove" matTooltipPosition="after" class="p-0">
+                    <mat-icon class="mat-icon-sm">close</mat-icon>
+                </button>
+            </div>
+        </div>
+
+
+
+    </mat-list-item>
+    <mat-list-item>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" class="w-100 pt-3 divider">
+            <div fxLayout="row wrap" fxLayoutAlign="end center">
+                <h2 class="fw-500 px-3">Total:</h2>
+                <h2 class="primary-color price"> 
+                    {{appService.Data.totalPrice}}
+                </h2>
+            </div> 
+        </div> 
+    </mat-list-item>
+</mat-list>
+<div *ngIf="!menuItems.length" class="py-3 text-center">
+    <p>You have no items in your shopping cart.</p> 
+</div>

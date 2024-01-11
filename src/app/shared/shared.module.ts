@@ -47,23 +47,26 @@ import { MenuItemsCarouselComponent } from './menu-items-carousel/menu-items-car
 import { QuantityCounterComponent } from './quantity-counter/quantity-counter.component';
 import { MenuItemsToolbarComponent } from './menu-items-toolbar/menu-items-toolbar.component';
 import { MenuItemHoverableComponent } from './menu-item-hoverable/menu-item-hoverable.component';
-import { TimelineComponent } from './timeline/timeline.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component'; 
 import { SocialIconsComponent } from './social-icons/social-icons.component';
+import { CartOverviewComponent } from './cart-overview/cart-overview.component';
+import { HeaderImageComponent } from './header-image/header-image.component';
+import { HeaderVideoComponent } from './header-video/header-video.component';
 @NgModule({
   declarations: [
     LogoComponent,
     HeaderCarouselComponent,
-
+    HeaderImageComponent,
+    HeaderVideoComponent,
+    CartOverviewComponent,
     MenuItemComponent,
     MenuItemsCarouselComponent,
     QuantityCounterComponent,
     MenuItemsToolbarComponent,
     MenuItemHoverableComponent,
-    TimelineComponent,
     TestimonialsComponent,
     ImageUploadComponent,
     ConfirmDialogComponent,
@@ -160,18 +163,20 @@ import { SocialIconsComponent } from './social-icons/social-icons.component';
     DirectivesModule,
     LogoComponent,
     HeaderCarouselComponent,
-
+    CartOverviewComponent,
     MenuItemComponent,
     MenuItemsCarouselComponent,
     QuantityCounterComponent,
     MenuItemsToolbarComponent,
     MenuItemHoverableComponent,
-    TimelineComponent,
     TestimonialsComponent,
     ImageUploadComponent,
     ConfirmDialogComponent,
     AlertDialogComponent,
     SocialIconsComponent,
+    HeaderCarouselComponent,
+    HeaderImageComponent,
+    HeaderVideoComponent,
   ]
 })
 export class SharedModule { }

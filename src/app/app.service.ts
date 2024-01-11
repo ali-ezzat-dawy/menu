@@ -10,7 +10,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { MenuItem, Order, Category } from "src/app/app.models";
 import { AppSettings } from "src/app/app.settings";
 import { environment } from "src/environments/environment";
-// import { environment } from 'src/environments/environment.prod';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -45,8 +44,7 @@ export class AppService {
     0 //totalCartCount
   );
 
-  public url = environment.url + "/assets/data/";
-  public urlTow = "https://backend.menu-list.online";
+  public url = "https://backend.menu-list.online";
 
   constructor(
     public http: HttpClient,
@@ -58,16 +56,12 @@ export class AppService {
     public translateService: TranslateService
   ) {}
 
-  // public getMenuItems(): Observable<MenuItem[]> {
-  //   return this.http.get<MenuItem[]>(this.url + "menu-items.json");
-  // }
   public getMenuItems(): Observable<MenuItem[]> {
-    return this.http.get<MenuItem[]>(this.urlTow + "/product");
+    return this.http.get<MenuItem[]>(this.url + "/product");
   }
   public getMenuItemsForUser(): Observable<MenuItem[]> {
-    return this.http.get<MenuItem[]>(this.urlTow + "/product/cat-items");
+    return this.http.get<MenuItem[]>(this.url + "/product/cat-items");
   }
-// localhost:7688/product/cat-items
   public getMenuItemById(id: number): Observable<MenuItem> {
     return this.http.get<MenuItem>(this.url + "menu-item-" + id + ".json");
   }
@@ -85,7 +79,7 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.get<Category[]>(this.urlTow + "/category", {
+    return this.http.get<Category[]>(this.url + "/category", {
       headers: headers,
     });
   }
@@ -94,7 +88,7 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.post(`${this.urlTow}/category/add-category`, obj, {
+    return this.http.post(`${this.url}/category/add-category`, obj, {
       headers: headers,
     });
   }
@@ -103,7 +97,7 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.post(`${this.urlTow}/product/add-product`, obj, {
+    return this.http.post(`${this.url}/product/add-product`, obj, {
       headers: headers,
     });
   }
@@ -112,7 +106,16 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.patch(`${this.urlTow}/product/edit-product/${id}`, obj, {
+    return this.http.patch(`${this.url}/product/edit-product/${id}`, obj, {
+      headers: headers,
+    });
+  }
+  editItemWithoutFile(id: any, obj: any): Observable<any> {
+    let token = localStorage.getItem("userToken");
+    let headers = {
+      "x-access-token": JSON.parse(token),
+    };
+    return this.http.patch(`${this.url}/product/edit-product-main-info/${id}`, obj, {
       headers: headers,
     });
   }
@@ -121,7 +124,7 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.delete(`${this.urlTow}/product/delete-product/${id}`, {
+    return this.http.delete(`${this.url}/product/delete-product/${id}`, {
       headers,
     });
   }
@@ -130,7 +133,7 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.delete(`${this.urlTow}/category/delete-category/${id}`, {
+    return this.http.delete(`${this.url}/category/delete-category/${id}`, {
       headers,
     });
   }
@@ -139,13 +142,13 @@ export class AppService {
     let headers = {
       "x-access-token": JSON.parse(token),
     };
-    return this.http.patch(`${this.urlTow}/category/edit-category/${id}`, obj, {
+    return this.http.patch(`${this.url}/category/edit-category/${id}`, obj, {
       headers,
     });
   }
 
   public getHomeCarouselSlides() {
-    return this.http.get<any[]>(this.url + "slides.json");
+    return this.http.get<any[]>("assets/data/slides.json");
   }
 
   public getGUID() {
@@ -194,6 +197,55 @@ export class AppService {
     return value;
   }
 
+  public addToCart(menuItem: MenuItem, component: any) {
+    if (!this.Data.cartList.find((item) => item.id == menuItem.id)) {
+      menuItem.cartCount = menuItem.cartCount ? menuItem.cartCount : 1;
+      this.Data.cartList.push(menuItem);
+      this.calculateCartTotal();
+      if (component) {
+        this.openCart(component);
+      } else {
+        this.snackBar.open(
+          'The menu item "' + menuItem.name + '" has been added to cart.',
+          "×",
+          {
+            verticalPosition: "top",
+            duration: 3000,
+            direction: this.appSettings.settings.rtl ? "rtl" : "ltr",
+            panelClass: ["success"],
+          }
+        );
+      }
+    }
+  }
+
+  public openCart(component: any) {
+    this.bottomSheet
+      .open(component, {
+        direction: this.appSettings.settings.rtl ? "rtl" : "ltr",
+      })
+      .afterDismissed()
+      .subscribe((isRedirect) => {
+        if (isRedirect) {
+          window.scrollTo(0, 0);
+        }
+      });
+  }
+
+  public calculateCartTotal() {
+    this.Data.totalPrice = 0;
+    this.Data.totalCartCount = 0;
+    this.Data.cartList.forEach((item) => {
+      let price = 0;
+      if (item) {
+        price = item.price;
+      } else {
+        price = item.price;
+      }
+      this.Data.totalPrice = this.Data.totalPrice + price * item.cartCount;
+      this.Data.totalCartCount = this.Data.totalCartCount + item.cartCount;
+    });
+  }
   public filterData(
     data: any,
     category_name: string,
@@ -204,11 +256,6 @@ export class AppService {
     if (category_name) {
       data = data.filter((item: any) => item.category_name == category_name);
     }
-
-    //for show more properties mock data
-    // for (var index = 0; index < 2; index++) {
-    //   data = data.concat(data);
-    // }
 
     this.sortData(sort, data);
     return this.paginator(data, page, perPage);
@@ -304,34 +351,4 @@ export class AppService {
     }
     return array;
   }
-
-  // public convertImgToBase64(url: string, callback: any) {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.onload = function () {
-  //     var reader = new FileReader();
-  //     reader.onloadend = function () {
-  //       callback(reader.result);
-  //     };
-  //     reader.readAsDataURL(xhr.response);
-  //   };
-  //   xhr.open("GET", url);
-  //   xhr.responseType = "blob";
-  //   xhr.send();
-  // }
-
-  //   private mailApi = "https://mailthis.to/codeninja";
-  //   public PostMessage(input: any) {
-  //     return this.http.post(this.mailApi, input, { responseType: "text" }).pipe(
-  //       map(
-  //         (response: any) => {
-  //           if (response) {
-  //             return response;
-  //           }
-  //         },
-  //         (error: any) => {
-  //           return error;
-  //         }
-  //       )
-  //     );
-  //   }
 }

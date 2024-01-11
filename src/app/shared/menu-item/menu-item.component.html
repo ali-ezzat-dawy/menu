@@ -46,12 +46,19 @@
       <div class="m-0 p-0">
         <div
           fxLayout=""
-          fxLayoutAlign="center center"
+          fxLayoutAlign="space-between center"
           class="divider mt-1"
         >
           <h2 class="primary-color price-cont mt-3">
             <h4 class="primary-color price-cur">جـ</h4> {{ menuItem.price }}
           </h2>
+          
+          <div class="text-muted">  
+
+            <button mat-icon-button [disabled]="onCart()" (click)="addToCart()" matTooltip="Add To Cart">
+                <mat-icon>shopping_cart</mat-icon>
+            </button>  
+        </div>
         </div>
       </div>
     </div>

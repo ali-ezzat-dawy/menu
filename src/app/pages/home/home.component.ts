@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Settings, AppSettings } from "src/app/app.settings";
 import { AppService } from "src/app/app.service";
 import { MenuItem } from "src/app/app.models";
-import { ApplicationService } from "src/app/application.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -29,7 +28,6 @@ export class HomeComponent implements OnInit {
   constructor(
     public appSettings: AppSettings,
     public appService: AppService,
-    public ApplicationService: ApplicationService
   ) {
     this.settings = this.appSettings.settings;
   }

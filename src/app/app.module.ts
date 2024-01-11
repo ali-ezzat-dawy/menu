@@ -16,8 +16,6 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(
     httpClient,
-    environment.url + "/assets/i18n/",
-    ".json"
   );
 }
 import { MatPaginatorIntl } from "@angular/material/paginator";

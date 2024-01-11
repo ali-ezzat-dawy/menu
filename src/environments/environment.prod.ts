@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://localhost:7688'
+  url: 'https://backend.menu-list.online'
 };

@@ -10,6 +10,7 @@ const routes: Routes = [
     children: [
       {path: "",loadChildren: () =>import("./pages/home/home.module").then((m) => m.HomeModule),},
       {path: "login",loadChildren: () =>import("./pages/login/login.module").then((m) => m.LoginModule),},
+
     ],
   },
   {path: "admin",canActivate:[AuthGuard], loadChildren: () =>import("./admin/admin.module").then((m) => m.AdminModule),},

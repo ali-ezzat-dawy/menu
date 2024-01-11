@@ -90,7 +90,7 @@ export class MenuItem {
     public id: number,
     public categoryId: number,
     public product_name: string,
-   
+    public cartCount: number,
     public name: string,
     public product_description: string,
     public description:string,
@@ -98,7 +98,9 @@ export class MenuItem {
     public price: number,
     public user_personal_image: MenuItemImage ,
     public  image: MenuItemImage,
-    public category_name:any
+    public category_name:any,
+    public availibilityCount: number,
+
   ) {}
 }
 

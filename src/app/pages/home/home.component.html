@@ -1,17 +1,45 @@
-<app-header-carousel  [slides]="slides" [contentOffsetToTop]="false" [fullscreen]="false"></app-header-carousel>
+<app-header-image
+  *ngIf="settings.header == 'image'"
+  [backgroundImage]="'assets/images/others/homepage.jpg'"
+  [bgImageAnimate]="true"
+  [contentOffsetToTop]="true"
+  [title]="'Welcome to Restaurant'"
+  [desc]="'Booking a table online is easy'"
+  [isHomePage]="true"
+  [fullscreen]="false"
+>
+</app-header-image>
+
+<app-header-carousel
+  *ngIf="settings.header == 'carousel'"
+  [slides]="slides"
+  [contentOffsetToTop]="false"
+  [fullscreen]="false"
+>
+</app-header-carousel>
+
+<app-header-video
+  *ngIf="settings.header == 'video'"
+  [backgroundVideo]="'http://themeseason.com/data/videos/restaurant.mp4'"
+  [contentOffsetToTop]="true"
+  [title]="'Welcome to Restaurant'"
+  [desc]="'Booking a table online is easy'"
+  [isHomePage]="true"
+  [fullscreen]="false"
+>
+</app-header-video>
 
 <div class="section default mt-3">
   <div class="px-3">
     <div class="theme-container" *ngFor="let item of product">
-      <h1 class="section-title">{{item.category_name}}</h1>
+      <h1 class="section-title">{{ item.category_name }}</h1>
       <!-- <p class="section-desc text-muted">
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </p> -->
-      <app-menu-items-carousel [menuItems]="item.products"></app-menu-items-carousel>
-      <div fxLayout="row" fxLayoutAlign="center center">
-    
-      </div>
+      <app-menu-items-carousel
+        [menuItems]="item.products"
+      ></app-menu-items-carousel>
+      <div fxLayout="row" fxLayoutAlign="center center"></div>
     </div>
   </div>
 </div>
-

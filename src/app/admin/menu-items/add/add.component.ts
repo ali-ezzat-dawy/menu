@@ -93,17 +93,68 @@ export class AddComponent implements OnInit {
 
 
 
-    // fileChange(event : any){
+
+    // public fileChange(event:any){ 
     //   this.file = event.target.files[0]
-    //   console.log( "file" , this.file )
-    // }
-    // public fileUploadClick(){ 
-    //   this.onFileUploadClick.emit();
-    // }
-    public fileChange(event:any){ 
+    //   console.log(this.file)
+    // } 
+    public fileChange(event:any){  
       this.file = event.target.files[0]
-      console.log(this.file)
+      if(this.file){
+        for (var i = 0; i < event.files; i++){
+          const reader = new FileReader(); 
+          if (this.file) {  
+            const message = this.appService.getTranslateValue('MESSAGE.FILE_SIZE', this.fileSize.toString()); //'The file size cannot exceed '+this.fileSize.toString()+' kb.';
+
+            let dialogRef = this.appService.openAlertDialog(message!); 
+            dialogRef.afterClosed().subscribe(dialogResult => {
+              this.clearInput();  
+            });  
+          } 
+          else {  
+            let name = event.files[i].name;
+            let size = event.files[i].size; 
+            reader.readAsDataURL(event.files[i]);
+            reader.onload = () => {  
+              var img = new Image(); 
+              img.onload = () => { 
+
+                this.file.push({
+                  "name": name, 
+                  "size": size, 
+                  "content": reader.result 
+                }); 
+                this.onFileChange.emit(this.file);  
+              }; 
+              img.src = reader.result as string; 
+            } 
+          }  
+        }
+      }  
+    }
+    public fileUploadClick(){ 
+      this.onFileUploadClick.emit();
+    }
+  
+    public clearInput(){
+      if(this.file.length == 0){  
+        if(document.getElementById('singleFileUploader')){ 
+          (<HTMLInputElement>document.getElementById('singleFileUploader')).value = ''; 
+        }
+      }  
     } 
+  
+    public deleteFile() {  
+      const message = this.appService.getTranslateValue('MESSAGE.SURE_DELETE');
+      let dialogRef = this.appService.openConfirmDialog('', message!);
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if(dialogResult){
+          this.file.length = 0;          
+          this.onFileChange.emit(this.file);
+          this.clearInput();   
+        }
+      });  
+    }  
   public onSubmit() {
     let formData = new FormData()
     formData.append("categoryId" , this.form.value.categoryId)
